@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <meta name="theme-color" content="#0d0d0d">
-  <title>Plug:ON</title>
+  <meta name="theme-color" content="#080F0C">
+  <title>PLUG:ON</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -12,9 +12,10 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0d0d0d;
+      --bg: #080F0C;
       --neon: #00FF88;
       --neon-dim: rgba(0, 255, 136, 0.55);
+      --gray: #B0B0B0;
       --white: #EDFAF4;
     }
 
@@ -34,7 +35,7 @@
       content: '';
       position: fixed;
       inset: 0;
-      background-image: radial-gradient(rgba(0, 255, 136, 0.1) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(0, 255, 136, 0.14) 1px, transparent 1px);
       background-size: 28px 28px;
       z-index: 0;
       pointer-events: none;
@@ -45,21 +46,21 @@
       content: '';
       position: fixed;
       inset: 0;
-      background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(13, 13, 13, 0.88) 100%);
+      background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(8, 15, 12, 0.85) 100%);
       z-index: 0;
       pointer-events: none;
     }
 
     .glow-orb {
       position: fixed;
-      top: -120px;
+      top: -100px;
       left: 50%;
       transform: translateX(-50%);
-      width: 560px;
-      height: 560px;
+      width: 500px;
+      height: 500px;
       background: radial-gradient(circle at center,
-        rgba(0, 255, 136, 0.1) 0%,
-        rgba(0, 255, 136, 0.03) 40%,
+        rgba(0, 255, 136, 0.13) 0%,
+        rgba(0, 255, 136, 0.04) 40%,
         transparent 70%);
       z-index: 0;
       pointer-events: none;
@@ -68,7 +69,7 @@
 
     @keyframes orb-breathe {
       0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
-      50% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+      50% { transform: translateX(-50%) scale(1.12); opacity: 1; }
     }
 
     .scanlines {
@@ -77,7 +78,7 @@
       background: repeating-linear-gradient(
         to bottom,
         transparent 0px, transparent 3px,
-        rgba(0, 0, 0, 0.04) 3px, rgba(0, 0, 0, 0.04) 4px
+        rgba(0, 0, 0, 0.05) 3px, rgba(0, 0, 0, 0.05) 4px
       );
       z-index: 3;
       pointer-events: none;
@@ -89,7 +90,7 @@
       max-width: 420px;
       min-height: 100dvh;
       margin: 0 auto;
-      padding: 56px 24px 48px;
+      padding: 64px 24px 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -102,34 +103,87 @@
       animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
-    .logo-wrap {
+    .avatar-wrap {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 24px;
+      position: relative;
+      margin-bottom: 28px;
     }
 
-    .logo-img {
-      width: 200px;
-      height: auto;
-      animation: logo-breathe 6s ease-in-out infinite;
+    .avatar-ring {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 255, 136, 0.22);
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(0, 255, 136, 0.02));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 0 0 6px rgba(0, 255, 136, 0.04),
+        0 0 32px rgba(0, 255, 136, 0.09),
+        inset 0 1px 0 rgba(0, 255, 136, 0.14);
+      animation: ring-pulse 4s ease-in-out infinite;
     }
 
-    @keyframes logo-breathe {
-      0%, 100% { filter: drop-shadow(0 0 14px rgba(0, 255, 136, 0.18)); }
-      50% { filter: drop-shadow(0 0 28px rgba(0, 255, 136, 0.36)); }
+    @keyframes ring-pulse {
+      0%, 100% {
+        box-shadow:
+          0 0 0 6px rgba(0,255,136,.04),
+          0 0 32px rgba(0,255,136,.09),
+          inset 0 1px 0 rgba(0,255,136,.14);
+      }
+      50% {
+        box-shadow:
+          0 0 0 9px rgba(0,255,136,.07),
+          0 0 52px rgba(0,255,136,.16),
+          inset 0 1px 0 rgba(0,255,136,.22);
+      }
+    }
+
+    .avatar-icon {
+      width: 34px;
+      height: 34px;
+      color: var(--neon);
+      filter: drop-shadow(0 0 9px rgba(0, 255, 136, 0.65));
+    }
+
+
+    .name {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 3.1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .name .colon {
+      color: var(--neon);
+      text-shadow: 0 0 14px var(--neon), 0 0 28px rgba(0, 255, 136, 0.35);
+      animation: colon-blink 1.7s step-end infinite;
+      display: inline-block;
+    }
+
+    @keyframes colon-blink {
+      0%, 65%, 100% { opacity: 1; }
+      80% { opacity: 0; }
     }
 
     .tagline {
-      font-size: 1.0rem;
+      font-size: 1.08rem;
       color: var(--neon-dim);
       letter-spacing: 0.06em;
       margin-bottom: 6px;
     }
 
     .tagline-kr {
-      font-size: 0.95rem;
-      color: rgba(176, 176, 176, 0.6);
+      font-size: 1.02rem;
+      color: rgba(176, 176, 176, 0.65);
       letter-spacing: 0.03em;
     }
 
@@ -261,9 +315,17 @@
   <main class="container">
 
     <section class="profile">
-      <div class="logo-wrap">
-        <img class="logo-img" src="image/Plug.png" alt="Plug:ON 로고">
+      <div class="avatar-wrap">
+        <div class="avatar-ring">
+          <svg class="avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2v10"/>
+            <path d="M5.636 5.636a9 9 0 1 0 12.728 0"/>
+          </svg>
+        </div>
       </div>
+
+      <h1 class="name">PLUG<span class="colon">:</span>ON</h1>
       <p class="tagline">Plug in. Power on.</p>
       <p class="tagline-kr">AI를 실무에 연결하다.</p>
     </section>
@@ -304,7 +366,7 @@
     </nav>
 
     <footer>
-      <p class="footer-text">© 2026 Plug:ON · AI를 실무에 연결하다</p>
+      <p class="footer-text">© 2026 PLUG:ON · AI를 실무에 연결하다</p>
     </footer>
 
   </main>
