@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="theme-color" content="#080F0C">
+  <title>PLUG:ON</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080F0C;
+      --neon: #00FF88;
+      --neon-dim: rgba(0, 255, 136, 0.55);
+      --gray: #B0B0B0;
+      --white: #EDFAF4;
+    }
+
+    html { height: 100%; background: var(--bg); }
+
+    body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Space Mono', monospace;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Dot grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(0, 255, 136, 0.14) 1px, transparent 1px);
+      background-size: 28px 28px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(8, 15, 12, 0.85) 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .glow-orb {
+      position: fixed;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle at center,
+        rgba(0, 255, 136, 0.13) 0%,
+        rgba(0, 255, 136, 0.04) 40%,
+        transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+      animation: orb-breathe 6s ease-in-out infinite;
+    }
+
+    @keyframes orb-breathe {
+      0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+      50% { transform: translateX(-50%) scale(1.12); opacity: 1; }
+    }
+
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px, transparent 3px,
+        rgba(0, 0, 0, 0.05) 3px, rgba(0, 0, 0, 0.05) 4px
+      );
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 420px;
+      min-height: 100dvh;
+      margin: 0 auto;
+      padding: 64px 24px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* PROFILE */
+    .profile {
+      text-align: center;
+      margin-bottom: 44px;
+      animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .avatar-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 28px;
+    }
+
+    .avatar-ring {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 255, 136, 0.22);
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(0, 255, 136, 0.02));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 0 0 6px rgba(0, 255, 136, 0.04),
+        0 0 32px rgba(0, 255, 136, 0.09),
+        inset 0 1px 0 rgba(0, 255, 136, 0.14);
+      animation: ring-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes ring-pulse {
+      0%, 100% {
+        box-shadow:
+          0 0 0 6px rgba(0,255,136,.04),
+          0 0 32px rgba(0,255,136,.09),
+          inset 0 1px 0 rgba(0,255,136,.14);
+      }
+      50% {
+        box-shadow:
+          0 0 0 9px rgba(0,255,136,.07),
+          0 0 52px rgba(0,255,136,.16),
+          inset 0 1px 0 rgba(0,255,136,.22);
+      }
+    }
+
+    .avatar-icon {
+      width: 34px;
+      height: 34px;
+      color: var(--neon);
+      filter: drop-shadow(0 0 9px rgba(0, 255, 136, 0.65));
+    }
+
+
+    .name {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 3.1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .name .colon {
+      color: var(--neon);
+      text-shadow: 0 0 14px var(--neon), 0 0 28px rgba(0, 255, 136, 0.35);
+      animation: colon-blink 1.7s step-end infinite;
+      display: inline-block;
+    }
+
+    @keyframes colon-blink {
+      0%, 65%, 100% { opacity: 1; }
+      80% { opacity: 0; }
+    }
+
+    .tagline {
+      font-size: 1.08rem;
+      color: var(--neon-dim);
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .tagline-kr {
+      font-size: 1.02rem;
+      color: rgba(176, 176, 176, 0.65);
+      letter-spacing: 0.03em;
+    }
+
+    /* LINKS */
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      animation: fade-up 0.9s 0.14s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 18px 20px;
+      background: linear-gradient(135deg,
+        rgba(0, 255, 136, 0.05) 0%,
+        rgba(0, 255, 136, 0.02) 100%);
+      border: 1px solid rgba(0, 255, 136, 0.15);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--white);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: border-color 0.22s, box-shadow 0.22s, transform 0.22s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%, rgba(0, 255, 136, 0.28) 50%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.22s;
+    }
+
+    .link-card:hover,
+    .link-card:active {
+      border-color: rgba(0, 255, 136, 0.38);
+      box-shadow: 0 0 22px rgba(0, 255, 136, 0.1), 0 6px 24px rgba(0, 0, 0, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .link-card:hover::after,
+    .link-card:active::after {
+      opacity: 1;
+    }
+
+    .link-icon {
+      width: 22px;
+      height: 22px;
+      color: var(--neon);
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 4px rgba(0, 255, 136, 0.28));
+      transition: filter 0.22s;
+    }
+
+    .link-card:hover .link-icon,
+    .link-card:active .link-icon {
+      filter: drop-shadow(0 0 9px rgba(0, 255, 136, 0.7));
+    }
+
+    .link-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-label {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      display: block;
+    }
+
+    .link-handle {
+      font-size: 0.62rem;
+      color: rgba(176, 176, 176, 0.55);
+      letter-spacing: 0.02em;
+      margin-top: 3px;
+      display: block;
+    }
+
+    .link-arrow {
+      color: var(--neon);
+      opacity: 0.38;
+      font-size: 1.1rem;
+      transition: transform 0.22s, opacity 0.22s;
+      flex-shrink: 0;
+    }
+
+    .link-card:hover .link-arrow,
+    .link-card:active .link-arrow {
+      transform: translateX(5px);
+      opacity: 0.95;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: auto;
+      padding-top: 44px;
+      animation: fade-up 0.9s 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .footer-text {
+      font-size: 0.56rem;
+      color: rgba(176, 176, 176, 0.28);
+      letter-spacing: 0.12em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-orb" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="container">
+
+    <section class="profile">
+      <div class="avatar-wrap">
+        <div class="avatar-ring">
+          <svg class="avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2v10"/>
+            <path d="M5.636 5.636a9 9 0 1 0 12.728 0"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="name">PLUG<span class="colon">:</span>ON</h1>
+      <p class="tagline">Plug in. Power on.</p>
+      <p class="tagline-kr">AI를 실무에 연결하다.</p>
+    </section>
+
+    <nav class="links" aria-label="소셜 링크">
+
+      <a href="https://www.instagram.com/plugon.ai?igsh=MXI5NXFibmtxeGFyNA=="
+         class="link-card"
+         target="_blank"
+         rel="noopener noreferrer">
+        <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+        <div class="link-content">
+          <span class="link-label">인스타그램</span>
+          <span class="link-handle">@plugon.ai</span>
+        </div>
+        <span class="link-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a href="https://www.threads.com/@plugon.ai"
+         class="link-card"
+         target="_blank"
+         rel="noopener noreferrer">
+        <svg class="link-icon" viewBox="0 0 192 192" fill="currentColor" aria-hidden="true">
+          <path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0132 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0695 0H96.9569C68.8816 0.19447 47.2921 9.6418 32.7883 28.0793C19.8819 44.4864 13.2244 67.3157 13.0007 95.9325L13 96L13.0007 96.0675C13.2244 124.684 19.8819 147.514 32.7883 163.921C47.2921 182.358 68.8816 191.806 96.9569 192H97.0695C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z"/>
+        </svg>
+        <div class="link-content">
+          <span class="link-label">스레드</span>
+          <span class="link-handle">@plugon.ai</span>
+        </div>
+        <span class="link-arrow" aria-hidden="true">→</span>
+      </a>
+
+    </nav>
+
+    <footer>
+      <p class="footer-text">© 2026 PLUG:ON · AI를 실무에 연결하다</p>
+    </footer>
+
+  </main>
+</body>
+</html>
