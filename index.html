@@ -7,7 +7,7 @@
   <title>Plug:ON</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,7 +15,8 @@
       --bg: #0d0d0d;
       --neon: #00FF88;
       --neon-dim: rgba(0, 255, 136, 0.55);
-      --white: #EDFAF4;
+      --white: #ffffff;
+      --gray: rgba(176, 176, 176, 0.6);
     }
 
     html { height: 100%; background: var(--bg); }
@@ -45,7 +46,7 @@
       content: '';
       position: fixed;
       inset: 0;
-      background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(13, 13, 13, 0.88) 100%);
+      background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(13, 13, 13, 0.9) 100%);
       z-index: 0;
       pointer-events: none;
     }
@@ -58,7 +59,7 @@
       width: 560px;
       height: 560px;
       background: radial-gradient(circle at center,
-        rgba(0, 255, 136, 0.1) 0%,
+        rgba(0, 255, 136, 0.09) 0%,
         rgba(0, 255, 136, 0.03) 40%,
         transparent 70%);
       z-index: 0;
@@ -89,7 +90,7 @@
       max-width: 420px;
       min-height: 100dvh;
       margin: 0 auto;
-      padding: 56px 24px 48px;
+      padding: 64px 24px 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -98,38 +99,61 @@
     /* PROFILE */
     .profile {
       text-align: center;
-      margin-bottom: 44px;
+      margin-bottom: 48px;
       animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
-    .logo-wrap {
+    /* Logo title — matches the business card design */
+    .logo-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 3.2rem;
+      letter-spacing: -0.01em;
+      color: var(--white);
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
+      gap: 0.08em;
+      margin-bottom: 18px;
+      line-height: 1;
     }
 
-    .logo-img {
-      width: 200px;
-      height: auto;
-      animation: logo-breathe 6s ease-in-out infinite;
+    .logo-colon {
+      color: var(--neon);
+      font-size: 0.85em;
+      margin: 0 0.05em;
+      animation: colon-blink 1.7s step-end infinite;
     }
 
-    @keyframes logo-breathe {
-      0%, 100% { filter: drop-shadow(0 0 14px rgba(0, 255, 136, 0.18)); }
-      50% { filter: drop-shadow(0 0 28px rgba(0, 255, 136, 0.36)); }
+    @keyframes colon-blink {
+      0%, 65%, 100% { opacity: 1; }
+      80% { opacity: 0; }
+    }
+
+    /* Toggle switch SVG that replaces the "O" in ON */
+    .toggle-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.04em;
+    }
+
+    .toggle-svg {
+      width: 0.88em;
+      height: 0.57em;
+      vertical-align: middle;
+      margin-right: 0.02em;
+      margin-bottom: 0.05em;
     }
 
     .tagline {
-      font-size: 1.0rem;
+      font-size: 0.95rem;
       color: var(--neon-dim);
       letter-spacing: 0.06em;
       margin-bottom: 6px;
     }
 
     .tagline-kr {
-      font-size: 0.95rem;
-      color: rgba(176, 176, 176, 0.6);
+      font-size: 0.9rem;
+      color: var(--gray);
       letter-spacing: 0.03em;
     }
 
@@ -180,9 +204,7 @@
     }
 
     .link-card:hover::after,
-    .link-card:active::after {
-      opacity: 1;
-    }
+    .link-card:active::after { opacity: 1; }
 
     .link-icon {
       width: 22px;
@@ -198,16 +220,13 @@
       filter: drop-shadow(0 0 9px rgba(0, 255, 136, 0.7));
     }
 
-    .link-content {
-      flex: 1;
-      min-width: 0;
-    }
+    .link-content { flex: 1; min-width: 0; }
 
     .link-label {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.92rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
       display: block;
     }
 
@@ -242,7 +261,7 @@
 
     .footer-text {
       font-size: 0.56rem;
-      color: rgba(176, 176, 176, 0.28);
+      color: rgba(176, 176, 176, 0.25);
       letter-spacing: 0.12em;
       text-align: center;
       text-transform: uppercase;
@@ -261,9 +280,12 @@
   <main class="container">
 
     <section class="profile">
-      <div class="logo-wrap">
-        <img class="logo-img" src="image/Plug.png" alt="Plug:ON 로고">
-      </div>
+      <h1 class="logo-title">
+        Plug<span class="logo-colon">:</span><span class="toggle-wrap"><svg class="toggle-svg" viewBox="0 0 44 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="41" height="25" rx="12.5" stroke="white" stroke-width="2.5"/>
+          <circle cx="31" cy="14" r="9" fill="white"/>
+        </svg>N</span>
+      </h1>
       <p class="tagline">Plug in. Power on.</p>
       <p class="tagline-kr">AI를 실무에 연결하다.</p>
     </section>
